@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finance Manager</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8f9fa;
+      color: #212529;
+    }
+    header {
+      background: #343a40;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+    header nav button {
+      margin: 0.5em;
+      padding: 0.5em 1em;
+      background: #495057;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    header nav button:hover {
+      background: #6c757d;
+    }
+    main {
+      padding: 1em;
+    }
+    section {
+      display: none;
+    }
+    section.active {
+      display: block;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+    }
+    button {
+      padding: 0.5em;
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Finance Manager</h1>
+    <nav>
+      <button onclick="showSection('addTransaction')">Dodaj Transakcję</button>
+      <button onclick="showSection('generateReport')">Generuj Raport</button>
+      <button onclick="showSection('setBudget')">Ustaw Budżet</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Sekcja Dodawania Transakcji -->
+    <section id="addTransaction" class="active">
+      <h2>Dodaj Transakcję</h2>
+      <form id="transactionForm">
+        <label for="type">Typ:</label>
+        <select id="type">
+          <option value="expense">Wydatek</option>
+          <option value="income">Przychód</option>
+        </select>
+        <label for="amount">Kwota:</label>
+        <input type="number" id="amount" required>
+        <label for="category">Kategoria:</label>
+        <input type="text" id="category" required>
+        <label for="date">Data:</label>
+        <input type="date" id="date" required>
+        <button type="submit">Dodaj</button>
+      </form>
+      <div id="transactionOutput"></div>
+    </section>
+
+    <!-- Sekcja Generowania Raportu -->
+    <section id="generateReport">
+      <h2>Generuj Raport</h2>
+      <form id="reportForm">
+        <label for="startDate">Początkowa data:</label>
+        <input type="date" id="startDate" required>
+        <label for="endDate">Końcowa data:</label>
+        <input type="date" id="endDate" required>
+        <button type="submit">Generuj</button>
+      </form>
+      <div id="reportOutput"></div>
+    </section>
+
+    <!-- Sekcja Ustawiania Budżetu -->
+    <section id="setBudget">
+      <h2>Ustaw Budżet</h2>
+      <form id="budgetForm">
+        <label for="budgetMonth">Miesiąc:</label>
+        <input type="month" id="budgetMonth" required>
+        <label for="budgetAmount">Budżet:</label>
+        <input type="number" id="budgetAmount" required>
+        <button type="submit">Ustaw</button>
+      </form>
+      <div id="budgetOutput"></div>
+    </section>
+  </main>
+
+  <script>
+    // Funkcja do przełączania sekcji
+    function showSection(sectionId) {
+      document.querySelectorAll("section").forEach((section) => {
+        section.classList.remove("active");
+      });
+      document.getElementById(sectionId).classList.add("active");
+    }
+
+    // Obsługa formularza Dodawania Transakcji
+    document.getElementById("transactionForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const type = document.getElementById("type").value;
+      const amount = document.getElementById("amount").value;
+      const category = document.getElementById("category").value;
+      const date = document.getElementById("date").value;
+
+      const transactionOutput = document.getElementById("transactionOutput");
+      transactionOutput.innerHTML = `<p>Dodano transakcję: ${type}, Kwota: ${amount}, Kategoria: ${category}, Data: ${date}</p>`;
+    });
+
+    // Obsługa formularza Generowania Raportu
+    document.getElementById("reportForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const startDate = document.getElementById("startDate").value;
+      const endDate = document.getElementById("endDate").value;
+
+      const reportOutput = document.getElementById("reportOutput");
+      reportOutput.innerHTML = `<p>Raport od ${startDate} do ${endDate}: (Przykładowe dane...)</p>`;
+    });
+
+    // Obsługa formularza Ustawiania Budżetu
+    document.getElementById("budgetForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const month = document.getElementById("budgetMonth").value;
+      const budgetAmount = document.getElementById("budgetAmount").value;
+
+      const budgetOutput = document.getElementById("budgetOutput");
+      budgetOutput.innerHTML = `<p>Ustawiono budżet: ${budgetAmount} PLN na miesiąc ${month}</p>`;
+    });
+  </script>
+</body>
+</html>
